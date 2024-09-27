@@ -1,2 +1,2 @@
-export const GRAPHQL_URL = "http://localhost:4000/graphql";
-export const GRAPHQL_SUBSCRIPTIONS_ENDPOINT = "ws://localhost:4000/graphql"
+export const GRAPHQL_URL = "https://note-app-sv.onrender.com";
+export const GRAPHQL_SUBSCRIPTIONS_ENDPOINT = "wss://https://note-app-sv.onrender.com/graphql"
