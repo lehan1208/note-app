@@ -1,4 +1,6 @@
 export const typeDefs = `
+  scalar Date
+
   type Folder {
     id: String!,
     name: String,
@@ -15,6 +17,7 @@ export const typeDefs = `
   type Note {
     id: String,
     content: String,
+    updatedAt: Date
   }
 
   type Query {
@@ -26,6 +29,7 @@ export const typeDefs = `
   type Mutation {
     addFolder(name: String!): Folder,
     addNote(content: String!, folderId: ID!): Note,
+    updateNote(content: String!, id: String!): Note,
     register(uid: String!, name: String!): Author,
   }
 `;

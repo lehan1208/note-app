@@ -7,7 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../pages/ErrorPage";
 import NoteList from "../components/NoteList";
 import NoteDetail from "../components/NoteDetail";
-import { addNewNote, noteLoader, notesLoader } from "../utils/noteUtil.js";
+import { addNewNote, noteLoader, notesLoader, updateNote } from "../utils/noteUtil.js";
 import { folderUtil } from "../utils/folderUtil.js";
 
 const AuthLayout = () => {
@@ -45,6 +45,7 @@ export default createBrowserRouter([
                     element: <NoteDetail/>,
                     path: "note/:noteId",
                     loader: noteLoader,
+                    action: updateNote,
                   }
                 ]
               }

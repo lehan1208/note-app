@@ -3,6 +3,7 @@ import { Link, Outlet, useLoaderData, useNavigate, useParams, useSubmit } from "
 import { Box, Card, CardContent, IconButton, List, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CreateNewFolderOutlined } from "@mui/icons-material";
+import moment from "moment";
 
 export default function NoteList() {
   const {noteId, folderId} = useParams();
@@ -81,13 +82,15 @@ export default function NoteList() {
                   <CardContent
                     sx={{
                       "&:last-child": {pb: "10px"},
-                      padding: "10px"
+                      padding: "10px",
+                      minHeight: "16px"
                     }}
                   >
                     <div
-                      style={{fontSize: "14px", fontWeight: "bold"}}
+                      style={{fontSize: "14px", minHeight: "16px", fontWeight: "bold"}}
                       dangerouslySetInnerHTML={{__html: `${item?.content.substring(0, 30) || "Empty"}`}}
                     />
+                    <Typography sx={{fontSize: "10px"}}>{`Last updated: ${moment(item.updatedAt).format("MMMM Do YYYY h:mm:ss A")}`}</Typography>
                   </CardContent>
                 </Card>
               </Link>
@@ -95,7 +98,7 @@ export default function NoteList() {
           })}
         </List>
       </Grid>
-      <Grid size={8} sx={{height: "100%"}}>
+      <Grid size={8} sx={{height: "100%", overflowY: "auto"}}>
         <Outlet/>
       </Grid>
     </Grid>
