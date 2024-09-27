@@ -90,7 +90,7 @@ export default function NoteList() {
                       style={{fontSize: "14px", minHeight: "16px", fontWeight: "bold"}}
                       dangerouslySetInnerHTML={{__html: `${item?.content.substring(0, 30) || "Empty"}`}}
                     />
-                    <Typography sx={{fontSize: "10px"}}>{`Last updated: ${moment(item.updatedAt).format("MMMM Do YYYY h:mm:ss A")}`}</Typography>
+                    <Typography sx={{fontSize: "10px"}}>{`${moment(item.updatedAt).format("MMMM Do YYYY h:mm:ss A")}`}</Typography>
                   </CardContent>
                 </Card>
               </Link>
