@@ -7,7 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../pages/ErrorPage";
 import NoteList from "../components/NoteList";
 import NoteDetail from "../components/NoteDetail";
-import { noteLoader, notesLoader } from "../utils/noteUtil.js";
+import { addNewNote, noteLoader, notesLoader } from "../utils/noteUtil.js";
 import { folderUtil } from "../utils/folderUtil.js";
 
 const AuthLayout = () => {
@@ -17,19 +17,6 @@ const AuthLayout = () => {
     </AuthProvider>
   );
 };
-
-const BASE_URL = "http://localhost:4000/graphql";
-const optionsRequest = {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  },
-}
-
-const fetchAction = (url = BASE_URL, options = optionsRequest) => {
-  return fetch(url, options).then((res) => res.json());
-}
 
 export default createBrowserRouter([
   {
@@ -45,24 +32,19 @@ export default createBrowserRouter([
         children: [
           {
             element: <Home/>,
-            loader: async () => {
-              return await folderUtil(fetchAction, optionsRequest, BASE_URL)
-            },
+            loader: folderUtil,
             path: "/",
             children: [
               {
                 element: <NoteList/>,
                 path: "folders/:folderId",
-                loader: async ({params: {folderId}}) => {
-                  return await notesLoader(folderId)
-                },
+                loader: notesLoader, // method to fetch: GET
+                action: addNewNote, // use for method PUT/POST
                 children: [
                   {
                     element: <NoteDetail/>,
                     path: "note/:noteId",
-                    loader: async({params: {noteId}}) => {
-                      return await noteLoader(noteId)
-                    },
+                    loader: noteLoader,
                   }
                 ]
               }

@@ -6,7 +6,6 @@ import { Outlet, useLoaderData } from "react-router-dom";
 
 const Home = () => {
   const {folders} = useLoaderData();
-  console.log("CHECK folders :=>>>>>>) ", folders);
 
   return (
     <>

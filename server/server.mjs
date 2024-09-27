@@ -50,24 +50,6 @@ const authorizationJWT = async (req, res, next) => {
     // return res.status(401).json({ message: 'Unauthorized' });
   }
 };
-// const authorizationJWT  = async (req, res, next) => {
-//   console.log(">>", {authorization: req.headers.authorization});
-//   const authorizationHeader = req.headers.authorization;
-//   if (!authorizationHeader) {
-//     return res.status(401).json({message: "Unauthorized"});
-//   } else {
-//     const accessToken = authorizationHeader.split(" ")[1];
-//     getAuth().verifyIdToken(accessToken)
-//       .then(decodedToken => {
-//         res.locals.uid = decodedToken.uid;
-//         next();
-//       })
-//       .catch(error => {
-//         console.log({error});
-//         return res.status(403).json({message: "Forbidden", error: error});
-//       })
-//   }
-// }
 
 app.use(
   cors(),
