@@ -31,5 +31,15 @@ export const typeDefs = `
     addNote(content: String!, folderId: ID!): Note,
     updateNote(content: String!, id: String!): Note,
     register(uid: String!, name: String!): Author,
+    pushNotification(content: String): Message
+  }
+  
+  type Message {
+    message: String
+  }
+  
+  type Subscription {
+    folderCreated: Message,
+    notification: Message,
   }
 `;

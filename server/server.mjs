@@ -12,6 +12,10 @@ import { resolvers } from "./resolvers/index.js";
 import "./firebaseConfig.js"
 import { getAuth } from "firebase-admin/auth";
 
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+
 const app = express();
 const httpServer = http.createServer(app);
 
@@ -19,10 +23,29 @@ const httpServer = http.createServer(app);
 const URI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.69fs5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 const PORT = process.env.PORT || 4000;
 
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+const wsServer = new WebSocketServer({
+  server: httpServer,
+  path: '/graphql',
+});
+
+const serverCleanup = useServer({ schema }, wsServer);
+
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({httpServer})],
+  schema,
+  plugins: [
+    ApolloServerPluginDrainHttpServer({ httpServer }),
+    {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            await serverCleanup.dispose();
+          },
+        };
+      },
+    },
+  ],
 });
 
 await server.start();
